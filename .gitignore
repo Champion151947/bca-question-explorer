@@ -1,0 +1,18 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+*.log
+
+# ── Private data: NEVER commit the question papers ──────────────────────────
+# The app code is open-source, but the papers you collected are not.
+questions.csv
+papers_index.csv
+subject_map.csv
+04_website_data.json
+public/data/
+server/private/
+.env
+.env.*
+!.env.example

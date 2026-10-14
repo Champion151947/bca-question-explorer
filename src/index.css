@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root,
+  html[data-theme='dark'] {
+    --c-bg: 11 17 32;
+    --c-surface: 17 26 46;
+    --c-surface2: 23 34 58;
+    --c-line: 255 255 255;
+    --c-fg: 248 250 252;
+    --c-muted: 148 163 184;
+    --c-primary: 99 102 241;
+    --c-primary2: 59 130 246;
+    color-scheme: dark;
+  }
+
+  html[data-theme='light'] {
+    --c-bg: 240 245 255;
+    --c-surface: 255 255 255;
+    --c-surface2: 232 240 254;
+    --c-line: 15 23 42;
+    --c-fg: 15 23 42;
+    --c-muted: 71 85 105;
+    --c-primary: 37 99 235;
+    --c-primary2: 29 78 216;
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-wrap: anywhere;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(900px 520px at 108% -12%, rgb(var(--c-primary) / 0.16), transparent 60%),
+      radial-gradient(760px 460px at -10% 6%, rgb(var(--c-primary2) / 0.12), transparent 55%),
+      radial-gradient(600px 500px at 50% 120%, rgb(var(--c-primary) / 0.08), transparent 60%);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+    line-height: 1.2;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-primary));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: rgb(var(--c-primary) / 0.35);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line/10 bg-surface shadow-card transition-shadow duration-200;
+  }
+
+  .hero {
+    background-image: linear-gradient(
+      135deg,
+      rgb(var(--c-primary)) 0%,
+      rgb(var(--c-primary2)) 58%,
+      #1e3a8a 100%
+    );
+    border: 1px solid rgb(255 255 255 / 0.16);
+  }
+
+  .glass {
+    background: rgb(var(--c-surface) / 0.72);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    border-color: rgb(var(--c-line) / 0.1);
+  }
+
+  .btn {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-line/10 px-4 py-2 text-sm font-medium transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-muted hover:bg-surface2 hover:text-fg;
+  }
+
+  .btn-primary {
+    @apply btn border-transparent text-white;
+    background-image: linear-gradient(135deg, rgb(var(--c-primary)), rgb(var(--c-primary2)));
+    box-shadow: 0 10px 22px -10px rgb(var(--c-primary) / 0.85);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.07);
+  }
+
+  .btn-soft {
+    @apply btn bg-surface2 text-fg hover:bg-surface2/70;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium;
+  }
+
+  .link {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  .skeleton {
+    @apply rounded-lg bg-surface2;
+    background-image: linear-gradient(
+      90deg,
+      rgb(var(--c-surface2) / 0.6) 0px,
+      rgb(var(--c-line) / 0.08) 40px,
+      rgb(var(--c-surface2) / 0.6) 80px
+    );
+    background-size: 600px 100%;
+    @apply animate-shimmer;
+  }
+
+  .prose-note {
+    @apply rounded-xl border border-line/10 bg-surface2/60 p-3 text-sm text-muted;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .safe-bottom {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Print: the revision sheet tab prints clean, everything else is hidden.
+--------------------------------------------------------------------------- */
+@media print {
+  html[data-theme] {
+    --c-bg: 255 255 255;
+    --c-surface: 255 255 255;
+    --c-surface2: 255 255 255;
+    --c-fg: 0 0 0;
+    --c-muted: 60 60 60;
+    --c-line: 0 0 0;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .card {
+    box-shadow: none !important;
+    border-color: #bbb !important;
+    page-break-inside: avoid;
+  }
+  a[href]::after {
+    content: '';
+  }
+}
+
+.print-only {
+  display: none;
+}
