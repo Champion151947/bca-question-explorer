@@ -5,8 +5,7 @@
   "outputDirectory": "dist",
   "build": {
     "env": {
-      "VITE_DATA_BASE": "/api/data",
-      "VITE_REQUIRE_AUTH": "true"
+      "VITE_DATA_BASE": "/api/data"
     }
   }
 }
